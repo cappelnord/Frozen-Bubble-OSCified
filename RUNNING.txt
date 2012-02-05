@@ -1,0 +1,11 @@
+You require Java 5 or later to run Frozen Bubble OSCified. 
+
+On Mac OS X you can run Frozen Bubble OSCified by double-clicking on the FrozenBubble.jar file.
+I didn't test it on any other Operating System, but the command ...
+
+java -jar FrozenBubble.jar
+
+... should always work!
+
+
+For additional command-line options please take a look at OSC-Reference.html

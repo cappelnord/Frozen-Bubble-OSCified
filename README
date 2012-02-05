@@ -1,0 +1,7 @@
+Frozen Bubble OSCified
+
+Frozen Bubble OSCified is a modified Version of the java port of Frozen Bubble[1]. The game itself hasn't changed that much, but the game sends OSC (Open Sound Control) Messages when certain events occur.
+
+See OSC-Reference.html for more info.
+
+[1] http://glenn.sanson.free.fr/v2/?select=fb:play

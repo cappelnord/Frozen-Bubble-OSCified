@@ -1,0 +1,8 @@
+For compiling you need 2 additional libraries not provided in this package.
+
+JIGA Toolbox - http://glenn.sanson.free.fr/v2/?select=jiga
+NetUtil OSC - http://www.sciss.de/netutil/
+
+Both libraries are released under LGPL.
+
+For easy building and packaging an Ant build.xml is included.

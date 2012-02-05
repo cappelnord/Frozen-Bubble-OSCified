@@ -1,0 +1,40 @@
+<project name="Frozen Bubble OSC" default="jar" basedir=".">
+	<description>
+		Frozen Bubble OSC
+	</description>
+	
+	<property name="src" location="." />
+	<property name="build" location="./build/classes" />
+	<property name="dist" location="./build" />
+	
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" source="1.5" target="1.5" />
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="${dist}/FrozenBubbleOSCified.jar" basedir="${build}" manifest="manifest.mf" >
+			<fileset dir="." includes="*.jpg, *.gif, *.txt" />
+		</jar>
+	</target>
+	
+	<target name="dist" depends="jar">		
+		<zip destfile="${dist}/FrozenBubbleOSCified-${DSTAMP}.zip" basedir="${src}" includes="*.html, COPYING.txt, RUNNING.txt, examples/*">
+			<fileset dir="${dist}" includes="FrozenBubbleOSCified.jar" />
+		</zip>
+		
+		<zip destfile="${dist}/FrozenBubbleOSCified-src-${DSTAMP}.zip" basedir="${src}" includes="*.html, *.jpg, *.gif, *.txt, *.mf, *.java, *.xml, examples/*" />
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>
+	
+

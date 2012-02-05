@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE">
+<head>
+
+	<style type="text/css">
+	
+	body {
+		font-family: Verdana;
+		font-size:80%;
+	}
+	
+	p {
+		line-height:130%;
+	}
+
+	</style>
+	
+	<title>Frozen Bubble OSCified - OSC Reference</title>
+</head>
+<body>
+<h1>Frozen Bubble OSCified</h1>
+
+<p>Frozen Bubble OSCified is a modified Version of the <a href="http://glenn.sanson.free.fr/v2/?select=fb:play">java port of Frozen Bubble</a>. The game itself hasn't changed that much, but the game sends OSC (Open Sound Control) Messages when certain events occur. The default host/port is <em>127.0.0.1:57120</em> <a href="http://supercollider.sourceforge.net">(SuperCollider Language)</a>. This can be changed with the command line arguments <em>-host [host] -port [port]</em>. The following document describes all available OSC Messages. Please note that some events may seem redundant. Also naming and implimentation is often worse than i wanted it to be, after all it is just a hacked game.</p>
+
+<p>Frozen Bubble OSCified can also be directly controlled over OSC. The game listens by default on port 57180, you can change the port with command line argument <em>-listen [port]</em>.</p>
+
+<h2>States</h2>
+
+<h3>/fb/state/init</h3>
+<p>&hellip; the Frozen Bubble OSCManager gets initialized.</p>
+
+<h3>/fb/state/start</h3>
+<p>&hellip; the game(play) has started.</p>
+
+<h3>/fb/state/won</h3>
+<p>&hellip; you have won a level (by clearing all bubbles)</p>
+
+<h3>/fb/state/lost</h3>
+<p>&hellip; you have lost a level.</p>
+
+<h3>/fb/state/splash</h3>
+<p>&hellip; splash screen is shown.</p>
+
+
+<h2>General Events</h2>
+
+<h3>/fb/event/frozenify</h3>
+<p>&hellip; the whole screen starts to freeze. The game is about to end. You can use <em>/fb/bubble/frozenify</em> to recieve frozenify Events for each bubble.</p>
+
+<h3>/fb/event/lostlife</h3>
+<p>&hellip; you lost a life.</p>
+
+<h3>/fb/event/movedown</h3>
+<p>&hellip; all bubbles move on row down. Please note that the bubbles don't send their updated position.</p>
+
+<h3>/fb/event/fire</h3>
+<p>&hellip; you fired a bubble.</p>
+
+<h3>/fb/event/hurry</h3>
+<p>&hellip; the hurry screen flashes. A <em>/fb/event/fire</em> message ends a hurry phase.</p>
+
+<h3>/fb/event/new</h3>
+<p>&hellip; a new map got initalized. All bubbles should be reseted. It is likely that new bubbles spawn after this message</p>
+
+<h2>Game Information</h2>
+
+<h3>/fb/level <em>(int level)</em></h3>
+<ul>
+<li>level: The current level</li>
+</ul>
+
+
+<h3>/fb/life <em>(int lifes)</em></h3>
+<ul>
+<li>lifes: The number of available lifes</li>
+</ul>
+
+<h3>/fb/direction <em>(float direction)</em></h3>
+<ul>
+<li>direction: The direction your bubble-gun points to. -1 is the outer left side, 1 is the outer right side.</li>
+</ul>
+
+
+<h2>Bubble Events</h2>
+<p>The first argument of every bubble message is a unique id (integer). This makes it possible to track several bubbles.</p>
+
+<h3>/fb/bubble/spawn <em>(int id, int color, float x, float y)</em></h3>
+
+<ul>
+<li>color: the color of the bubble.
+<ul>
+	<li>0: black</li>
+	<li>1: silver</li>
+	<li>2: blue</li>
+	<li>3: green</li>
+	<li>4: yellow</li>
+	<li>5: pink</li>
+	<li>6: red</li>
+	<li>7: orange</li>
+</ul>
+
+</li>
+<li>x: the x-position of the bubble. 0 is the outer left, 1 is the outer right.</li>
+<li>y: the y-positon of the bubble. 1 is on the bottom, 0 is on the top.</li>
+</ul>
+<p>&hellip; a new bubble is spawned and visible.</p>
+
+<h3>/fb/bubble/position <em>(int id, float x, float y)</em></h3>
+<ul>
+<li>x: the x-position of the bubble. 0 is the outer left, 1 is the outer right.</li>
+<li>y: the y-positon of the bubble. 1 is on the bottom, 0 is on the top.</li>
+</ul>
+<p>&hellip; a bubble did move.</p>
+
+
+<h3>/fb/bubble/rebound <em>(int id, int side, float y)</em></h3>
+
+<ul>
+<li>side: on which side the rebound occured. -1 = left, 1 = right</li>
+<li>y: the y-positon of the bubble. 1 is on the bottom, 0 is on the top.</li>
+</ul>
+<p>
+&hellip; a bubble rebounded on one side.
+</p>
+
+<h3>/fb/bubble/frozenify <em>(int id)</em></h3>
+<p>&hellip; a bubble has frozen over.</p>
+
+<h3>/fb/bubble/stick <em>(int id)</em></h3>
+<p>&hellip; this moving bubble sticked to other bubbles.</p>
+
+<h3>/fb/bubble/fall <em>(int id)</em></h3>
+<p>&hellip; the bubbles falls down.</p>
+
+<h3>/fb/bubble/jump <em>(int id)</em></h3>
+<p>&hellip; the bubbles jumps, and then falls down. Future Versions may give you a vector in which direction the bubble jumps.</p>
+
+<h3>/fb/bubble/delete <em>(int id)</em></h3>
+<p>&hellip; the bubble is no longer on the screen. it can be deleted!</p>
+</body>
+
+<h2>Controlling Frozen Bubble OSC</h2>
+<p>Frozen Bubble OSCified doesn't send these messages. They can be send to Frozen Bubble OSCified in order to controll it over OSC.</p>
+
+<h3>/fire</h3>
+<p>&hellip; acts like the fire key, as well as the start button.</p>
+
+<h3>/step/left</h3>
+<p>&hellip; the shooting device rotates one step to the left.</p>
+
+<h3>/step/right</h3>
+<p>&hellip; the shooting device rotates one step to the right.</p>
+
+<h3>/stay/left</h3>
+<p>&hellip; the shooting device rotates to the left until another stay message is received.</p>
+
+<h3>/stay/right</h3>
+<p>&hellip; the shooting device rotates to the right until another stay message is received.</p>
+
+<h3>/stay/release</h3>
+<p>&hellip; the shooting devices stops rotating</p>
+
+</html>
